@@ -57,9 +57,12 @@ public class Grid : MonoBehaviour
                 pieces[x, y] = newPiece.GetComponent<GamePiece>();
                 pieces[x, y].Init(x, y, this, PieceType.NORMAL);
 
-                if (pieces[x, y].IsMovable())
-                {
+                if (pieces[x, y].IsMovable()) {
                     pieces[x, y].MovableComponent.Move(x, y);
+                }
+
+                if (pieces[x, y].IsColored()) {
+                    pieces[x, y].ColorComponent.SetColor((ColorPiece.ColorType)Random.Range(0, pieces[x, y].ColorComponent.NumColors));
                 }
             }
         }
