@@ -5,6 +5,7 @@ public class Grid : MonoBehaviour
 {
     public enum PieceType
     {
+        EMPTY,
         NORMAL,
         COUNT,
     };
@@ -50,20 +51,7 @@ public class Grid : MonoBehaviour
         for (int x = 0; x < xDim; x++) {
             for (int y = 0; y < yDim; y++)
             {
-                var newPiece = (GameObject)Instantiate(piecePrefabDict[PieceType.NORMAL], Vector3.zero, Quaternion.identity);
-                newPiece.name = "Piece(" + x + ", " + y + ")";
-                newPiece.transform.parent = transform;
-
-                pieces[x, y] = newPiece.GetComponent<GamePiece>();
-                pieces[x, y].Init(x, y, this, PieceType.NORMAL);
-
-                if (pieces[x, y].IsMovable()) {
-                    pieces[x, y].MovableComponent.Move(x, y);
-                }
-
-                if (pieces[x, y].IsColored()) {
-                    pieces[x, y].ColorComponent.SetColor((ColorPiece.ColorType)Random.Range(0, pieces[x, y].ColorComponent.NumColors));
-                }
+                SpawnNewPiece(x, y, PieceType.EMPTY);
             }
         }
     }
@@ -72,5 +60,16 @@ public class Grid : MonoBehaviour
     {
         return new Vector2(transform.position.x - xDim / 2.0f + x,
             transform.position.y + yDim / 2.0f - y);
+    }
+
+    public GamePiece SpawnNewPiece(int x, int y, PieceType type)
+    {
+        GameObject newPiece = (GameObject)Instantiate(piecePrefabDict[type], GetWorldPosition(x, y), Quaternion.identity);
+        newPiece.transform.parent = transform;
+
+        pieces[x, y] = newPiece.GetComponent<GamePiece>();
+        pieces[x, y].Init(x, y, this, type);
+
+        return pieces[x, y];
     }
 }
