@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class Grid : MonoBehaviour
 
     public int xDim;
     public int yDim;
+    public float fillTime;
 
     public PiecePrefab[] piecePrefabs;
     public GameObject backgroundPrefab;
@@ -55,12 +57,12 @@ public class Grid : MonoBehaviour
             }
         }
 
-        Fill();
+        StartCoroutine(Fill());
     }
 
-    public void Fill() {
+    public IEnumerator Fill() {
         while (FillStep()) {
-
+            yield return new WaitForSeconds(fillTime);
         }
     }
 
@@ -76,7 +78,7 @@ public class Grid : MonoBehaviour
                     var pieceBelow = pieces[x, y + 1];
 
                     if (pieceBelow.Type == PieceType.EMPTY) {
-                        piece.MovableComponent.Move(x, y + 1);
+                        piece.MovableComponent.Move(x, y + 1, fillTime);
                         pieces[x, y + 1] = piece;
                         SpawnNewPiece(x, y, PieceType.EMPTY);
                         movedPiece = true;
@@ -94,7 +96,7 @@ public class Grid : MonoBehaviour
 
                 pieces[x, 0] = newPiece.GetComponent<GamePiece>();
                 pieces[x, 0].Init(x, -1, this, PieceType.NORMAL);
-                pieces[x, 0].MovableComponent.Move(x, 0);
+                pieces[x, 0].MovableComponent.Move(x, 0, fillTime);
                 pieces[x, 0].ColorComponent.SetColor((ColorPiece.ColorType)Random.Range(0, pieces[x, 0].ColorComponent.NumColors));
                 movedPiece = true;
             }
