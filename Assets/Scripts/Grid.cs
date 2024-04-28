@@ -54,6 +54,53 @@ public class Grid : MonoBehaviour
                 SpawnNewPiece(x, y, PieceType.EMPTY);
             }
         }
+
+        Fill();
+    }
+
+    public void Fill() {
+        while (FillStep()) {
+
+        }
+    }
+
+    public bool FillStep()
+    {
+        bool movedPiece = false;
+
+        for (int y = yDim - 2; y >= 0; y--) {
+            for (int x = 0; x < xDim; x++) {
+                GamePiece piece = pieces[x, y];
+
+                if (piece.IsMovable()) {
+                    var pieceBelow = pieces[x, y + 1];
+
+                    if (pieceBelow.Type == PieceType.EMPTY) {
+                        piece.MovableComponent.Move(x, y + 1);
+                        pieces[x, y + 1] = piece;
+                        SpawnNewPiece(x, y, PieceType.EMPTY);
+                        movedPiece = true;
+                    }
+                }
+            }
+        }
+
+        for (int x = 0; x < xDim; x++) {
+            var pieceBelow = pieces[x, 0];
+
+            if (pieceBelow.Type == PieceType.EMPTY) {
+                var newPiece = (GameObject)Instantiate(piecePrefabDict[PieceType.NORMAL], GetWorldPosition(x, -1), Quaternion.identity);
+                newPiece.transform.parent = transform;
+
+                pieces[x, 0] = newPiece.GetComponent<GamePiece>();
+                pieces[x, 0].Init(x, -1, this, PieceType.NORMAL);
+                pieces[x, 0].MovableComponent.Move(x, 0);
+                pieces[x, 0].ColorComponent.SetColor((ColorPiece.ColorType)Random.Range(0, pieces[x, 0].ColorComponent.NumColors));
+                movedPiece = true;
+            }
+        }
+
+        return movedPiece;
     }
 
     public Vector2 GetWorldPosition(int x, int y)
