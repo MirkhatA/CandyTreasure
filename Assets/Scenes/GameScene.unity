@@ -1389,7 +1389,15 @@ MonoBehaviour:
   totalScoreText: {fileID: 714360557}
   moneyText: {fileID: 1704497317}
   winBoardUI: {fileID: 1829360994}
-  timeLeft: 10
+  timeLeft: 100
+  bgImage: {fileID: 1479596023}
+  bgImages:
+  - {fileID: 21300000, guid: 623fba869364d41468593a42caba3fa3, type: 3}
+  - {fileID: 21300000, guid: 8c282a687d6b9404e966052a3c827bb5, type: 3}
+  - {fileID: 21300000, guid: d79d83dada35ede4187fef0b14b2aa00, type: 3}
+  - {fileID: 21300000, guid: a46ed88ce7dffac4e9e018c024228963, type: 3}
+  - {fileID: 21300000, guid: 5c016a4bc157bb54cb8650dd576e9348, type: 3}
+  - {fileID: 21300000, guid: 8a6ad767b9082544788b60afbf02d9a0, type: 3}
 --- !u!4 &1129239986
 Transform:
   m_ObjectHideFlags: 0

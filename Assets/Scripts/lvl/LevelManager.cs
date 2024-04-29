@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private GameObject winBoardUI;
     [SerializeField] private float timeLeft;
+    [SerializeField] private Image bgImage;
+    [SerializeField] private Sprite[] bgImages;
 
     private int _points;
+    private int _iterablePoint;
     private int _levelNumber;
     private bool _timerOn = false;
     private float _money;
@@ -22,9 +26,14 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _points = 0;
+        _iterablePoint = 0;
         _levelNumber = 1;
         _timerOn = true;
-        
+
+        int bgIndex = PlayerPrefs.GetInt("backgroundIndex", 0);
+        Debug.Log(bgIndex);
+        bgImage.sprite = bgImages[bgIndex];
+
         winBoardUI.SetActive(false);
     }
 
@@ -33,7 +42,7 @@ public class LevelManager : MonoBehaviour
         _money = PlayerPrefs.GetFloat("money", 0f);
         moneyText.text = _money.ToString();
 
-        if (_points >= 50)
+        if (_iterablePoint >= 50)
         {
             SetNextLevel();
         }
@@ -58,14 +67,15 @@ public class LevelManager : MonoBehaviour
     public void IncreasePoints()
     {
         _points += 1;
-        pointsText.text = _points.ToString() + "/50";
+        _iterablePoint += 1;
+        pointsText.text = _iterablePoint.ToString() + "/50";
     }
 
     private void SetNextLevel()
     {
         _levelNumber += 1;
         levelText.text = "Óð. " + _levelNumber.ToString();
-        _points = 0;
+        _iterablePoint = 0;
     }
 
     private void UpdateTimer(float currentTime)

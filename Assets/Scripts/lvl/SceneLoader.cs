@@ -15,6 +15,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void LoadShopMenu()
+    {
+        SceneManager.LoadScene("ShopScene");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
