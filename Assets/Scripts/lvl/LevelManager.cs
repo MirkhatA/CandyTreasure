@@ -12,7 +12,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject winBoardUI;
     [SerializeField] private float timeLeft;
     [SerializeField] private Image bgImage;
+    [SerializeField] private Slider slider;
     [SerializeField] private Sprite[] bgImages;
+
+    [SerializeField] private Sprite[] themeUI;
+    [SerializeField] private Image board;
 
     private int _points;
     private int _iterablePoint;
@@ -32,6 +36,8 @@ public class LevelManager : MonoBehaviour
         int bgIndex = PlayerPrefs.GetInt("backgroundIndex", 0);
         bgImage.sprite = bgImages[bgIndex];
 
+        board.sprite = themeUI[PlayerPrefs.GetInt("DarkThemeSetting")];
+
         winBoardUI.SetActive(false);
     }
 
@@ -40,20 +46,15 @@ public class LevelManager : MonoBehaviour
         _money = PlayerPrefs.GetFloat("money", 0f);
         moneyText.text = _money.ToString();
 
-        if (_iterablePoint >= 50)
-        {
+        if (_iterablePoint >= 50) {
             SetNextLevel();
         }
 
-        if (_timerOn)
-        {
-            if (timeLeft > 0)
-            {
+        if (_timerOn) {
+            if (timeLeft > 0) {
                 timeLeft -= Time.deltaTime;
                 UpdateTimer(timeLeft);
-            }
-            else
-            {
+            } else {
                 timeLeft = 0;
                 _timerOn = false;
                 winBoardUI.SetActive(true);
@@ -66,7 +67,16 @@ public class LevelManager : MonoBehaviour
     {
         _points += 1;
         _iterablePoint += 1;
-        pointsText.text = _iterablePoint.ToString() + "/50";
+        // set _iterablePoint slider.value 
+        // slider.value takes float value from 0 to 1
+        // _iterablePoint can be from 0 to 50
+        float sliderValue = (float)_iterablePoint / 50f;
+        slider.value = sliderValue;
+
+        if (_iterablePoint >= 50)
+        {
+            SetNextLevel();
+        }
     }
 
     private void SetNextLevel()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +16,11 @@ public class SceneLoader : MonoBehaviour
     public void LoadShopMenu()
     {
         SceneManager.LoadScene("ShopScene");
+    }
+
+    public void LoadSettingsMenu()
+    {
+        SceneManager.LoadScene("SettingsScene");
     }
 
     public void QuitGame()
