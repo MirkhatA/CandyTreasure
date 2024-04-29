@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,13 +22,14 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 100;
+
         _points = 0;
         _iterablePoint = 0;
         _levelNumber = 1;
         _timerOn = true;
 
         int bgIndex = PlayerPrefs.GetInt("backgroundIndex", 0);
-        Debug.Log(bgIndex);
         bgImage.sprite = bgImages[bgIndex];
 
         winBoardUI.SetActive(false);
