@@ -257,10 +257,9 @@ public class Grid : MonoBehaviour
                     for (int dir = 0; dir <= 1; dir++) {
                         for (int yOffset = 1; yOffset < yDim; yOffset++) {
                             int y;
-
-                            if (dir == 0) {// up
+                            if (dir == 0) { //Up
                                 y = newY - yOffset;
-                            } else { // DOwn
+                            } else { // Down
                                 y = newY + yOffset;
                             }
 
@@ -278,8 +277,8 @@ public class Grid : MonoBehaviour
 
                     if (verticalPieces.Count < 2) {
                         verticalPieces.Clear();
-                    } else {
-                        for (int j = 0; j < verticalPieces.Count; j++) {
+                    } else {  
+                        for (int j = 0; i < verticalPieces.Count; j++) {
                             matchingPieces.Add(verticalPieces[j]);
                         }
                         break;
@@ -327,17 +326,18 @@ public class Grid : MonoBehaviour
                 }
             }
 
-            // traverse horizontaly
-            if (verticalPieces.Count >= 3) {
-                for (int i = 0; i < verticalPieces.Count; i++) {
-                    for (int dir = 0; dir <= 1; dir++) {
-                        for (int xOffset = 1; xOffset < xDim; xOffset++) {
+            if (verticalPieces.Count >= 3)
+            {
+                for (int i = 0; i < verticalPieces.Count; i++)
+                {
+                    for (int dir = 0; dir <= 1; dir++)
+                    {
+                        for (int xOffset = 1; xOffset < xDim; xOffset++)
+                        {
                             int x;
-
-                            if (dir == 0) { // left
+                            if (dir == 0) { //Light
                                 x = newX - xOffset;
-                            }
-                            else { // right
+                            } else { // Right
                                 x = newX + xOffset;
                             }
 
@@ -345,19 +345,25 @@ public class Grid : MonoBehaviour
                                 break;
                             }
 
-                            if (pieces[x, verticalPieces[i].Y].IsColored() && pieces[x, verticalPieces[i].Y].ColorComponent.Color == color) {
+                            if (pieces[x, verticalPieces[i].Y].IsColored() && pieces[x, verticalPieces[i].Y].ColorComponent.Color == color)
+                            {
                                 verticalPieces.Add(pieces[x, verticalPieces[i].Y]);
                             }
-                            else {
+                            else
+                            {
                                 break;
                             }
                         }
                     }
 
-                    if (horizontalPieces.Count < 2) {
+                    if (horizontalPieces.Count < 2)
+                    {
                         horizontalPieces.Clear();
-                    } else {
-                        for (int j = 0; j < horizontalPieces.Count; j++) {
+                    }
+                    else
+                    {
+                        for (int j = 0; i < horizontalPieces.Count; j++)
+                        {
                             matchingPieces.Add(horizontalPieces[j]);
                         }
                         break;
