@@ -10,23 +10,29 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text totalScoreText;
+    [SerializeField] private TMP_Text moneyText;
     [SerializeField] private GameObject winBoardUI;
     [SerializeField] private float timeLeft;
 
     private int _points;
     private int _levelNumber;
     private bool _timerOn = false;
+    private float _money;
 
     private void Start()
     {
         _points = 0;
         _levelNumber = 1;
         _timerOn = true;
+        
         winBoardUI.SetActive(false);
     }
 
     private void Update()
     {
+        _money = PlayerPrefs.GetFloat("money", 0f);
+        moneyText.text = _money.ToString();
+
         if (_points >= 50)
         {
             SetNextLevel();

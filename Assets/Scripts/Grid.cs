@@ -36,27 +36,20 @@ public class Grid : MonoBehaviour
     private GamePiece pressedPiece;
     private GamePiece enteredPiece;
 
-    private LevelManager _leveManager;
+    private LevelManager _levelManager;
+    private MoneyManager _moneyManager;
 
     private void Start()
     {
         piecePrefabDict = new Dictionary<PieceType, GameObject>();
-        _leveManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        _moneyManager = GameObject.Find("MoneyManager").GetComponent<MoneyManager>();
 
         for (int i = 0; i < piecePrefabs.Length; i++) {
             if (!piecePrefabDict.ContainsKey(piecePrefabs[i].type)) {
                 piecePrefabDict.Add(piecePrefabs[i].type, piecePrefabs[i].prefab);
             }
         }
-
-        /*
-        for (int x = 0; x < xDim; x++) {
-            for (int y = 0; y < yDim; y++) {
-                var background = (GameObject) Instantiate(backgroundPrefab, GetWorldPosition(x, y), Quaternion.identity);
-                background.transform.parent = transform;
-            }
-        }
-        */
 
         pieces = new GamePiece[xDim, yDim];
         for (int x = 0; x < xDim; x++) {
@@ -264,42 +257,6 @@ public class Grid : MonoBehaviour
                 }
             }
 
-            // traverse vertically
-            /*
-            if (horizontalPieces.Count >= 3) {
-                for (int i = 0; i < horizontalPieces.Count; i++) {
-                    for (int dir = 0; dir <= 1; dir++) {
-                        for (int yOffset = 1; yOffset < yDim; yOffset++) {
-                            int y;
-                            if (dir == 0) { //Up
-                                y = newY - yOffset;
-                            } else { // Down
-                                y = newY + yOffset;
-                            }
-
-                            if (y < 0 || y >= yDim) {
-                                break;
-                            }
-
-                            if (pieces[horizontalPieces[i].X, y].IsColored() && pieces[horizontalPieces[i].X, y].ColorComponent.Color == color) {
-                                verticalPieces.Add(pieces[horizontalPieces[i].X, y]);
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (verticalPieces.Count < 2) {
-                        verticalPieces.Clear();
-                    } else {  
-                        for (int j = 0; i < verticalPieces.Count; j++) {
-                            matchingPieces.Add(verticalPieces[j]);
-                        }
-                        break;
-                    }
-                }
-            }*/
-
             if (matchingPieces.Count >= 3) {
                 return matchingPieces;
             }
@@ -340,53 +297,6 @@ public class Grid : MonoBehaviour
                 }
             }
 
-            // traverse vertically for L and T shape
-            /*
-            if (verticalPieces.Count >= 3)
-            {
-                for (int i = 0; i < verticalPieces.Count; i++)
-                {
-                    for (int dir = 0; dir <= 1; dir++)
-                    {
-                        for (int xOffset = 1; xOffset < xDim; xOffset++)
-                        {
-                            int x;
-                            if (dir == 0) { //Light
-                                x = newX - xOffset;
-                            } else { // Right
-                                x = newX + xOffset;
-                            }
-
-                            if (x < 0 || x >= xDim) {
-                                break;
-                            }
-
-                            if (pieces[x, verticalPieces[i].Y].IsColored() && pieces[x, verticalPieces[i].Y].ColorComponent.Color == color)
-                            {
-                                verticalPieces.Add(pieces[x, verticalPieces[i].Y]);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (horizontalPieces.Count < 2)
-                    {
-                        horizontalPieces.Clear();
-                    }
-                    else
-                    {
-                        for (int j = 0; i < horizontalPieces.Count; j++)
-                        {
-                            matchingPieces.Add(horizontalPieces[j]);
-                        }
-                        break;
-                    }
-                }
-            }
-            */
             if (matchingPieces.Count >= 3) {
                 return matchingPieces;
             }
@@ -414,7 +324,8 @@ public class Grid : MonoBehaviour
                             if (ClearPiece(match[i].X, match[i].Y))
                             {
                                 needsRefill = true;
-                                _leveManager.IncreasePoints();
+                                _levelManager.IncreasePoints();
+                                _moneyManager.IncreaseMoney();
                             }
                         }
                     }
