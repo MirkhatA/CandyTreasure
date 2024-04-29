@@ -41,14 +41,6 @@ public class SwitchSetting : MonoBehaviour
         SetSprite(notificationSprite, _notificationStatus);
     }
 
-    private void Update()
-    {
-        Debug.Log("darkThemeSprite" + _darkThemeStatus);        
-        Debug.Log("musicSprite" + _musicStatus);        
-        Debug.Log("soundSprite" + _soundStatus);        
-        Debug.Log("notificationSprite" + _notificationStatus);
-    }
-
     public void SetToggleDarkTheme()
     {
         _darkThemeStatus = !_darkThemeStatus;
