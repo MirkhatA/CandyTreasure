@@ -97,5 +97,6 @@ public class SwitchSetting : MonoBehaviour
         if (_darkThemeStatus) SetToggleDarkTheme();
         if (_musicStatus) SetToggleMusic();
         if (_soundStatus) SetToggleSound();
+        PlayerPrefs.SetFloat("money", 0f);
     }
 }
