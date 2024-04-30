@@ -8,13 +8,16 @@ public class ShopItemComponent : MonoBehaviour
     [SerializeField] private float price;
     [SerializeField] private TMP_Text priceText;
 
+    [SerializeField] private GameObject selectedItem;
+
     private bool _hasItem;
     private float _money;
 
     private void Start()
     {
-        _money = PlayerPrefs.GetFloat("money");
+        selectedItem.SetActive(false);
 
+        _money = PlayerPrefs.GetFloat("money");
         _hasItem = PlayerPrefs.GetInt("hasBgWithId" + bgId) == 1;
 
         if (priceText != null) priceText.text = price.ToString();
@@ -22,11 +25,23 @@ public class ShopItemComponent : MonoBehaviour
         DoesHaveItem();
     }
 
+    private void DeactivateAllSelectedItems() {
+        foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            if (obj.name == "SelectedIcon")
+            {
+                obj.SetActive(false);
+            }
+        }
+    }
+
     public void SetItemBGPref()
     {
         if (_hasItem)
         {
             PlayerPrefs.SetInt("backgroundIndex", bgId);
+            DeactivateAllSelectedItems();
+            selectedItem.SetActive(true);
         }
         else
         {
@@ -36,7 +51,9 @@ public class ShopItemComponent : MonoBehaviour
                 PlayerPrefs.SetFloat("money", _money);
                 PlayerPrefs.SetInt("hasBgWithId" + bgId, 1);
                 PlayerPrefs.SetInt("backgroundIndex", bgId);
+                DeactivateAllSelectedItems();
                 DoesHaveItem();
+                selectedItem.SetActive(true);
             }
         }
     }
