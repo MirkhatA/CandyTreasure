@@ -91,4 +91,11 @@ public class SwitchSetting : MonoBehaviour
             obj.sprite = toggleOff;
         }
     }
+
+    public void ResetSettings()
+    {
+        if (_darkThemeStatus) SetToggleDarkTheme();
+        if (_musicStatus) SetToggleMusic();
+        if (_soundStatus) SetToggleSound();
+    }
 }
