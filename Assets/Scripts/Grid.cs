@@ -39,6 +39,8 @@ public class Grid : MonoBehaviour
     private LevelManager _levelManager;
     private MoneyManager _moneyManager;
 
+    private bool _canSwipe;
+
     private void Start()
     {
         piecePrefabDict = new Dictionary<PieceType, GameObject>();
@@ -64,6 +66,7 @@ public class Grid : MonoBehaviour
 
     public IEnumerator Fill() {
         bool needsRefill = true;
+        _canSwipe = false;
 
         while (needsRefill) {
             yield return new WaitForSeconds(fillTime);
@@ -75,6 +78,8 @@ public class Grid : MonoBehaviour
 
             needsRefill = ClearAllValidMatches();
         }
+        _canSwipe = true;
+
     }
 
     public bool FillStep()
@@ -184,7 +189,7 @@ public class Grid : MonoBehaviour
     }
 
     public void SwapPieces(GamePiece piece1, GamePiece piece2) {
-        if (piece1.IsMovable() && piece2.IsMovable()) {
+        if (piece1.IsMovable() && piece2.IsMovable() && _canSwipe) {
             pieces[piece1.X, piece1.Y] = piece2;
             pieces[piece2.X, piece2.Y] = piece1;
 
