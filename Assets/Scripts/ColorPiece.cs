@@ -4,50 +4,39 @@ using UnityEngine;
 
 public class ColorPiece : MonoBehaviour
 {
-    public enum ColorType {
+    public enum TypeOfColor {
         RED, GREEN, BLUE
     }
 
     [System.Serializable]
     public struct ColorSprite {
-        public ColorType color;
+        public TypeOfColor color;
         public Sprite sprite;
     };
 
+    public TypeOfColor color;
     public ColorSprite[] colorSprites;
 
-    public ColorType color;
+    private SpriteRenderer _spriteName;
+    private Dictionary<TypeOfColor, Sprite> colorSpriteDict;
 
-    public ColorType Color
-    {
+    public TypeOfColor Color {
         get { return color; }
         set { SetColor(value); }
     }
-    public int NumColors
-    {
-        get { return colorSprites.Length; }
-    }
-
-    private SpriteRenderer sprite;
-    private Dictionary<ColorType, Sprite> colorSpriteDict;
+    public int NumColors => colorSprites.Length; 
 
     private void Awake() {
-        sprite = transform.Find("piece").GetComponent<SpriteRenderer>();
+        _spriteName = transform.Find("piece").GetComponent<SpriteRenderer>();
 
-        colorSpriteDict = new Dictionary<ColorType, Sprite>();
+        colorSpriteDict = new Dictionary<TypeOfColor, Sprite>();
 
-        for (int i = 0; i < colorSprites.Length; i++) {
-            if (!colorSpriteDict.ContainsKey(colorSprites[i].color)) {
-                colorSpriteDict.Add(colorSprites[i].color, colorSprites[i].sprite);
-            }
-        }
+        for (int i = 0; i < colorSprites.Length; i++) if (!colorSpriteDict.ContainsKey(colorSprites[i].color)) colorSpriteDict.Add(colorSprites[i].color, colorSprites[i].sprite);
     }
 
-    public void SetColor(ColorType newColor) {
-        color = newColor;
+    public void SetColor(TypeOfColor nColor) {
+        color = nColor;
 
-        if (colorSpriteDict.ContainsKey(newColor)) {
-            sprite.sprite = colorSpriteDict[newColor];
-        }
+        if (colorSpriteDict.ContainsKey(nColor)) _spriteName.sprite = colorSpriteDict[nColor];
     }
 }

@@ -4,37 +4,33 @@ using UnityEngine;
 
 public class MovablePiece : MonoBehaviour
 {
-    private GamePiece piece;
-    private IEnumerator moveCoroutine;
+    private GamePiece _pieceItem;
+    private IEnumerator _coroutine;
 
     private void Awake()
     {
-        piece = GetComponent<GamePiece>();
+        _pieceItem = GetComponent<GamePiece>();
     }
 
-    public void Move(int newX, int newY, float time)
-    {
-        if (moveCoroutine != null) {
-            StopCoroutine(moveCoroutine);
-        }
-
-        moveCoroutine = MoveCoroutine(newX, newY, time);
-        StartCoroutine(moveCoroutine);
+    public void MovePiece(int x, int y, float ti) {
+        if (_coroutine != null) StopCoroutine(_coroutine);
+        _coroutine = MoveC(x, y, ti);
+        StartCoroutine(_coroutine);
     }
 
-    private IEnumerator MoveCoroutine(int newX, int newY, float time)
+    private IEnumerator MoveC(int x, int y, float ti)
     {
-        piece.X = newX;
-        piece.Y = newY;
+        _pieceItem.X = x;
+        _pieceItem.Y = y;
 
-        var startPos = transform.position;
-        var endPos = piece.GridRef.GetWorldPosition(newX, newY);
+        var startP = transform.position;
+        var endP = _pieceItem.GridRef.GetWorldPosition(x, y);
 
-        for (float t = 0; t <= 1 * time; t += Time.deltaTime) {
-            piece.transform.position = Vector3.Lerp(startPos, endPos, t/time);
+        for (float t = 0; t <= 1 * ti; t += Time.deltaTime) {
+            _pieceItem.transform.position = Vector3.Lerp(startP, endP, t/ti);
             yield return 0;
         }
 
-        piece.transform.position = endPos;
+        _pieceItem.transform.position = endP;
     }
 }
