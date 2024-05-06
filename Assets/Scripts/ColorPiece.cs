@@ -4,39 +4,50 @@ using UnityEngine;
 
 public class ColorPiece : MonoBehaviour
 {
-    public enum TypeOfColor {
+    public enum ColorType {
         RED, GREEN, BLUE
     }
 
     [System.Serializable]
     public struct ColorSprite {
-        public TypeOfColor color;
+        public ColorType color;
         public Sprite sprite;
     };
 
-    public TypeOfColor color;
     public ColorSprite[] colorSprites;
 
-    private SpriteRenderer _spriteName;
-    private Dictionary<TypeOfColor, Sprite> colorSpriteDict;
+    public ColorType color;
 
-    public TypeOfColor Color {
+    public ColorType Color
+    {
         get { return color; }
         set { SetColor(value); }
     }
-    public int NumColors => colorSprites.Length; 
-
-    private void Awake() {
-        _spriteName = transform.Find("piece").GetComponent<SpriteRenderer>();
-
-        colorSpriteDict = new Dictionary<TypeOfColor, Sprite>();
-
-        for (int i = 0; i < colorSprites.Length; i++) if (!colorSpriteDict.ContainsKey(colorSprites[i].color)) colorSpriteDict.Add(colorSprites[i].color, colorSprites[i].sprite);
+    public int NumColors
+    {
+        get { return colorSprites.Length; }
     }
 
-    public void SetColor(TypeOfColor nColor) {
-        color = nColor;
+    private SpriteRenderer sprite;
+    private Dictionary<ColorType, Sprite> colorSpriteDict;
 
-        if (colorSpriteDict.ContainsKey(nColor)) _spriteName.sprite = colorSpriteDict[nColor];
+    private void Awake() {
+        sprite = transform.Find("piece").GetComponent<SpriteRenderer>();
+
+        colorSpriteDict = new Dictionary<ColorType, Sprite>();
+
+        for (int i = 0; i < colorSprites.Length; i++) {
+            if (!colorSpriteDict.ContainsKey(colorSprites[i].color)) {
+                colorSpriteDict.Add(colorSprites[i].color, colorSprites[i].sprite);
+            }
+        }
+    }
+
+    public void SetColor(ColorType newColor) {
+        color = newColor;
+
+        if (colorSpriteDict.ContainsKey(newColor)) {
+            sprite.sprite = colorSpriteDict[newColor];
+        }
     }
 }

@@ -451,9 +451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b471f05cfafec1840a8acef5a933e47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 5
-  y: 5
-  timeOfFilling: 0.1
+  xDim: 5
+  yDim: 5
+  fillTime: 0.1
   piecePrefabs:
   - type: 1
     prefab: {fileID: 9187119492664796924, guid: f096af66e0683b8448613cf725e3d517, type: 3}
@@ -461,7 +461,7 @@ MonoBehaviour:
     prefab: {fileID: 1008134587398413991, guid: 4007b551bb7e77a43aabde4f7171af55, type: 3}
   - type: 2
     prefab: {fileID: 2462654584012019381, guid: 8037ea71c626e3246b3c764e7c59a540, type: 3}
-  bgPref: {fileID: 2506247084263668027, guid: 7d6aae18e5bc1274ab39169040846ebd, type: 3}
+  backgroundPrefab: {fileID: 2506247084263668027, guid: 7d6aae18e5bc1274ab39169040846ebd, type: 3}
 --- !u!4 &376826622
 Transform:
   m_ObjectHideFlags: 0
@@ -1285,19 +1285,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 875337914}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 889313508}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &875337914
 MonoBehaviour:
   m_ObjectHideFlags: 0

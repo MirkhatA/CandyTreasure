@@ -7,11 +7,11 @@ public class ClearablePiece : MonoBehaviour
 
     public AnimationClip clearAnimation;
 
+    private bool isBeingCleared = false;
+
+    public bool IsBeingCleared { get { return isBeingCleared; } }
+
     protected GamePiece piece;
-    private bool _itemBeingCleared = false;
-
-    public bool IsBeingCleared => _itemBeingCleared; 
-
 
     private void Awake()
     {
@@ -20,17 +20,20 @@ public class ClearablePiece : MonoBehaviour
 
     public void Clear()
     {
-        _itemBeingCleared = true;
-        StartCoroutine(CoroutineOfClearing());
+        isBeingCleared = true;
+        StartCoroutine(ClearCoroutine());
     }
 
-    private IEnumerator CoroutineOfClearing()
+    private IEnumerator ClearCoroutine()
     {
-        var animatorComponent = GetComponent<Animator>();
+        Animator animator = GetComponent<Animator>();
 
-        if (animatorComponent) {
-            animatorComponent.Play(clearAnimation.name);
+        if (animator)
+        {
+            animator.Play(clearAnimation.name);
+
             yield return new WaitForSeconds(clearAnimation.length);
+
             Destroy(gameObject);
         }
     }

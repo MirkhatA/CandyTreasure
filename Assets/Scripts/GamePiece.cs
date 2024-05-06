@@ -7,36 +7,64 @@ public class GamePiece : MonoBehaviour
     private int x;
     private int y;
 
-    private Grid grid;
-    private Grid.PieceType type;
-    private ColorPiece colorComponent;
-    private MovablePiece movableComponent;
-    private ClearablePiece clearableComponent;
-
-    public int X {
+    public int X
+    {
         get { return x; }
-        set {
-            if (IsMovable()) {
+        set
+        {
+            if (IsMovable())
+            {
                 x = value;
             }
         }
     }
 
-    public int Y {
+    public int Y
+    {
         get { return y; }
-        set {
-            if (IsMovable()) {
+        set
+        {
+            if (IsMovable())
+            {
                 y = value;
             }
         }
     }
 
+    private Grid.PieceType type;
 
-    public Grid.PieceType Type => type; 
-    public Grid GridRef => grid; 
-    public MovablePiece MovableComponent => movableComponent; 
-    public ColorPiece ColorComponent => colorComponent; 
-    public ClearablePiece ClearableComponent => clearableComponent; 
+    public Grid.PieceType Type
+    {
+        get { return type; }
+    }
+
+    private Grid grid;
+
+    public Grid GridRef
+    {
+        get { return grid; }
+    }
+
+    private MovablePiece movableComponent;
+
+    public MovablePiece MovableComponent
+    {
+        get { return movableComponent; }
+    }
+
+    private ColorPiece colorComponent;
+
+    public ColorPiece ColorComponent
+    {
+        get { return colorComponent; }
+    }
+
+    private ClearablePiece clearableComponent;
+
+    public ClearablePiece ClearableComponent
+    {
+        get { return clearableComponent; }
+    }
 
     private void Awake()
     {
@@ -55,17 +83,17 @@ public class GamePiece : MonoBehaviour
 
     void OnMouseEnter()
     {
-        grid.EnterP(this);
+        grid.EnterPiece(this);
     }
 
     void OnMouseDown()
     {
-        grid.PressP(this);
+        grid.PressPiece(this);
     }
 
     void OnMouseUp()
     {
-        grid.RelP();
+        grid.ReleasePiece();
     }
 
     public bool IsMovable()
