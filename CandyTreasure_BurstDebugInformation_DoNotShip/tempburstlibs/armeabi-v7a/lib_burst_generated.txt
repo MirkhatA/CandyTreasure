@@ -25,8 +25,11 @@ Library: C:\mirkek\unity\Vlad\CandyTreasure\CandyTreasure\Temp\BurstOutput\tempb
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.VisualScripting.State;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
+--assembly-defines=Facebook.Unity.Settings;
+--assembly-defines=Facebook.Unity;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Facebook.Unity.Android;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
