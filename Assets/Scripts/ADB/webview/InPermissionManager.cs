@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -13,37 +11,34 @@ public class InPermissionManager : MonoBehaviour
 
         if (!result)
         {
-            var callbacks = new PermissionCallbacks();
-            callbacks.PermissionDenied += PermissionCallbacks_PermissionDenied;
-            callbacks.PermissionGranted += PermissionCallbacks_PermissionGranted;
-            callbacks.PermissionDeniedAndDontAskAgain += PermissionCallbacks_PermissionDeniedAndDontAskAgain;
+            var cb = new PermissionCallbacks();
+            cb.PermissionDenied += Callback_denied;
+            cb.PermissionGranted += Callback_granted;
+            cb.PermissionDeniedAndDontAskAgain += Callback_denied_dontAskMore;
 
-            Permission.RequestUserPermission("android.permission." + permissionName, callbacks);
+            Permission.RequestUserPermission("android.permission." + permissionName, cb);
             result = Permission.HasUserAuthorizedPermission("android.permission." + permissionName);
         }
-        else GetInAppBrowserHelper().CallStatic("gggggg", true);
+        else AppBrowseHelp().CallStatic("gggggg", true);
     }
-    private static AndroidJavaObject GetInAppBrowserHelper()
+    private static AndroidJavaObject AppBrowseHelp()
     {
-        var helper = new AndroidJavaClass("inappbrowser.kokosoft.com.InAppBrowserDialogFragment");
-        return helper;
-    }
-
-    internal void PermissionCallbacks_PermissionDeniedAndDontAskAgain(string permissionName)
-    {
-        System.Console.WriteLine("gfdgf #0");
-        GetInAppBrowserHelper().CallStatic("gggggg", false);
+        var hp = new AndroidJavaClass("treasuresco.candy.page.InAppBrowserDialogFragment");
+        return hp;
     }
 
-    internal void PermissionCallbacks_PermissionGranted(string permissionName)
+    internal void Callback_denied_dontAskMore(string permissionName)
     {
-        System.Console.WriteLine("gfdgf #1");
-        GetInAppBrowserHelper().CallStatic("gggggg", true);
+        AppBrowseHelp().CallStatic("gggggg", false);
     }
 
-    internal void PermissionCallbacks_PermissionDenied(string permissionName)
+    internal void Callback_granted(string permissionName)
     {
-        System.Console.WriteLine("gfdgf #2");
-        GetInAppBrowserHelper().CallStatic("gggggg", false);
+        AppBrowseHelp().CallStatic("gggggg", true);
+    }
+
+    internal void Callback_denied(string permissionName)
+    {
+        AppBrowseHelp().CallStatic("gggggg", false);
     }
 }

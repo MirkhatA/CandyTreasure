@@ -1,61 +1,52 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Events;
 
 public class InAppBrowserBridge : MonoBehaviour {
 
 	[System.Serializable]
-	public class BrowserLoadingCallback: UnityEvent<string> {
+	public class BrowseLoad: UnityEvent<string> {
 		
 	}
 
 	[System.Serializable]
-	public class BrowserLoadingWithErrorCallback: UnityEvent<string, string> {
+	public class BrowseLoadError: UnityEvent<string, string> {
 		
 	}
 
-	public BrowserLoadingCallback onJSCallback = new BrowserLoadingCallback();
+	public BrowseLoad jsBrowser = new BrowseLoad();
 
-	public BrowserLoadingCallback onBrowserFinishedLoading = new BrowserLoadingCallback();
+	public BrowseLoad loadFinished = new BrowseLoad();
 
-	public BrowserLoadingCallback onBrowserStartedLoading = new BrowserLoadingCallback();
+	public BrowseLoad browserStart = new BrowseLoad();
 
-	public BrowserLoadingWithErrorCallback onBrowserFinishedLoadingWithError = new BrowserLoadingWithErrorCallback();
+	public BrowseLoadError finishWithError = new BrowseLoadError();
 
-	public UnityEvent onBrowserClosed = new UnityEvent();
+	public UnityEvent closeB = new UnityEvent();
 
-	public UnityEvent onAndroidBackButtonPressed = new UnityEvent();
+	public UnityEvent backBtn = new UnityEvent();
 
-	void OnBrowserJSCallback(string callback) {
-		Debug.Log("InAppBrowser: JS Message: " + callback);
-		onJSCallback.Invoke(callback);
+	void JSBrowser(string callback) {
+        jsBrowser.Invoke(callback);
 	}
 
-	void OnBrowserFinishedLoading(string url) {
-		Debug.Log("InAppBrowser: FinishedLoading " + url);
-		onBrowserFinishedLoading.Invoke(url);
+	void LoadFinished(string url) {
+		loadFinished.Invoke(url);
 	}
 
-	void OnBrowserStartedLoading(string url) {
-		Debug.Log("InAppBrowser: StartedLoading " + url);
-		onBrowserStartedLoading.Invoke(url);
+	void BrowserStart(string url) {
+        browserStart.Invoke(url);
 	}
 
-	void OnBrowserFinishedLoadingWithError(string urlAndError) {
-		Debug.Log("InAppBrowser: FinishedLoading With Error " + urlAndError);
+	void FinishWithError(string urlAndError) {
 		string[] parts = urlAndError.Split(',');
-		Debug.Log("URL:"+parts[0]);
-		Debug.Log("ERROR:"+parts[1]);
-		onBrowserFinishedLoadingWithError.Invoke(parts[0], parts[1]);
+        finishWithError.Invoke(parts[0], parts[1]);
 	}
 
-	void OnBrowserClosed() {
-		Debug.Log("InAppBrowser: Closed");
-		onBrowserClosed.Invoke();
+	void CloseB() {
+		closeB.Invoke();
 	}
 
-	void OnAndroidBackButtonPressed() {
-		Debug.Log("InAppBrowser: Android back button pressed");
-		onAndroidBackButtonPressed.Invoke();
+	void BackBtn() {
+		backBtn.Invoke();
 	}
 }

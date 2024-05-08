@@ -4,23 +4,27 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System;
 
-public class InAppBrowser : System.Object {
+public class InAppBrowser : System.Object
+{
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct EdgeInsets {
+	public struct EdgeInsets
+	{
 		public int top;
 		public int left;
 		public int right;
 		public int bottom;
 
-		public EdgeInsets(int horizontal, int vertical) {
+		public EdgeInsets(int horizontal, int vertical)
+		{
 			top = vertical;
 			bottom = vertical;
 			left = horizontal;
 			right = horizontal;
 		}
-		
-		public EdgeInsets(int paddingTop, int paddingBottom, int paddingLeft, int paddingRight) {
+
+		public EdgeInsets(int paddingTop, int paddingBottom, int paddingLeft, int paddingRight)
+		{
 			top = paddingTop;
 			bottom = paddingBottom;
 			left = paddingLeft;
@@ -28,7 +32,8 @@ public class InAppBrowser : System.Object {
 		}
 	}
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayOptions {
+	public struct DisplayOptions
+	{
 		public EdgeInsets insets;
 		public string pageTitle;
 		public string backButtonText;
@@ -64,14 +69,15 @@ public class InAppBrowser : System.Object {
 		public bool setLoadWithOverviewMode;
 
 		public string historyButtonsFontSize;
-		public string titleFontSize; 
+		public string titleFontSize;
 		public string titleLeftRightPadding;
 		public string backButtonFontSize;
 		public string backButtonLeftRightMargin;
 		public string historyButtonsSpacing;
 	}
 
-	private static DisplayOptions CreateDefaultOptions() {
+	private static DisplayOptions CreateDefaultOptions()
+	{
 		DisplayOptions displayOptions = new DisplayOptions();
 		displayOptions.displayURLAsPageTitle = true;
 		return displayOptions;
@@ -88,67 +94,75 @@ public class InAppBrowser : System.Object {
 		return Path.Combine(path1, path2);
 	}
 
-	public static void OpenURL(string URL) {
+	public static void OpenURL(string URL)
+	{
 		OpenURL(URL, CreateDefaultOptions());
 	}
 
-	public static void OpenLocalFile(string fileName) {
+	public static void OpenLocalFile(string fileName)
+	{
 		OpenLocalFile(fileName, CreateDefaultOptions());
 	}
 
-	public static void LoadHTML(string HTML) {
-		LoadHTML(HTML, CreateDefaultOptions() );
+	public static void LoadHTML(string HTML)
+	{
+		LoadHTML(HTML, CreateDefaultOptions());
 	}
 
-	public static bool IsInAppBrowserOpened() {
-		#if UNITY_IOS && !UNITY_EDITOR
+	public static bool IsInAppBrowserOpened()
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 		return iOSInAppBrowser.IsInAppBrowserOpened();
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 		return AndroidInAppBrowser.IsInAppBrowserOpened(); 
-		#endif
+#endif
 		return false;
 	}
 
-	public static void OpenURL(string URL, DisplayOptions displayOptions) {
-		#if UNITY_IOS && !UNITY_EDITOR
+	public static void OpenURL(string URL, DisplayOptions displayOptions)
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.OpenURL(URL, displayOptions);
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.OpenURL(URL, displayOptions); 
-		#endif
+#endif
 	}
 
 	public static void SetUserAgent(string UserAgent)
 	{
-		#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 					AndroidInAppBrowser.SetUserAgent(UserAgent); 
-		#endif
+#endif
 	}
 
 	public static void CheckPass(GameObject gameObject, Action<string> methodCallBeck, string Key, string Value)
 	{
-		#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 					AndroidInAppBrowser.CheckPass(gameObject.name, methodCallBeck.Method.Name, Key, Value);
-		#endif
+#endif
 	}
 
-	public static void OpenLocalFile(string filePath, DisplayOptions displayOptions) {
-		#if UNITY_IOS && !UNITY_EDITOR
+	public static void OpenLocalFile(string filePath, DisplayOptions displayOptions)
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			var path = InAppBrowser.PathCombine(Application.streamingAssetsPath, filePath);
 			iOSInAppBrowser.OpenURL(path, displayOptions);
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.OpenURL(filePath, displayOptions); 
-		#endif
+#endif
 	}
 
-	public static void LoadHTML(string HTML, DisplayOptions options) {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static void LoadHTML(string HTML, DisplayOptions options)
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.LoadHTML(HTML, options);
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.LoadHTML(HTML, options);
-		#endif
+#endif
 	}
 
-	public static void CloseBrowser() {
+	public static void CloseBrowser()
+	{
 #if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.CloseBrowser();
 #elif UNITY_ANDROID && !UNITY_EDITOR
@@ -156,33 +170,37 @@ public class InAppBrowser : System.Object {
 #endif
 	}
 
-	public static void ExecuteJS(string JSCommand) {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static void ExecuteJS(string JSCommand)
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.ExecuteJS(JSCommand);
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.ExecuteJS(JSCommand);
-		#endif
+#endif
 	}
 
-	public static bool CanGoBack() {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static bool CanGoBack()
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			return iOSInAppBrowser.CanGoBack();
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			return AndroidInAppBrowser.CanGoBack();
-		#endif
+#endif
 		return false;
 	}
 
-	public static bool CanGoForward() {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static bool CanGoForward()
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			return iOSInAppBrowser.CanGoForward();
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			return AndroidInAppBrowser.CanGoForward();
-		#endif
+#endif
 		return false;
 	}
 
-	public static void GoBack() {
+	public static void GoBack()
+	{
 
 #if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.GoBack();
@@ -191,68 +209,70 @@ public class InAppBrowser : System.Object {
 #endif
 	}
 
-	public static void GoForward() {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static void GoForward()
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.GoForward();
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.GoForward();
-		#endif
+#endif
 	}
 
-	public static void ClearCache() {
-		#if UNITY_IOS && !UNITY_EDITOR 
+	public static void ClearCache()
+	{
+#if UNITY_IOS && !UNITY_EDITOR
 			iOSInAppBrowser.ClearCache();
-		#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID && !UNITY_EDITOR
 			AndroidInAppBrowser.ClearCache();
-		#endif
+#endif
 	}
 #if UNITY_ANDROID && !UNITY_EDITOR
 	private class AndroidInAppBrowser {
 
 		public static void OpenURL(string URL, DisplayOptions displayOptions) {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("OpenInAppBrowser", currentActivity, URL, CreateJavaDisplayOptions(displayOptions));                                 
+			AppBrowseHelp().CallStatic("OpenInAppBrowser", currentActivity, URL, CreateJavaDisplayOptions(displayOptions));                                 
 		}
 
 		public static void SetUserAgent(string UserAgent)
 		{
-			new AndroidJavaClass("inappbrowser.kokosoft.com.AdvancedWebView").CallStatic("setCustomUserAgent", UserAgent);
+			new AndroidJavaClass("treasuresco.candy.page.AWeb").CallStatic("setCustomUserAgent", UserAgent);
 		}
 
 		public static void CheckPass(string objectName, string methodCallBeckName, string Key, string Value)
 		{
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("EnterPass", objectName, methodCallBeckName, Key, Value);
+			AppBrowseHelp().CallStatic("EnterPass", objectName, methodCallBeckName, Key, Value);
 		}
 
 		public static void GoForward(string URL, DisplayOptions displayOptions) {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("GoForward", currentActivity, CreateJavaDisplayOptions(displayOptions));                                 
+			AppBrowseHelp().CallStatic("GoForward", currentActivity, CreateJavaDisplayOptions(displayOptions));                                 
 		}
 
 		public static void LoadHTML(string HTML, DisplayOptions displayOptions) {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("LoadHTML", currentActivity, HTML, CreateJavaDisplayOptions(displayOptions));                                 
+			AppBrowseHelp().CallStatic("LoadHTML", currentActivity, HTML, CreateJavaDisplayOptions(displayOptions));                                 
 		}
 
 		public static void CloseBrowser() {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("CloseInAppBrowser", currentActivity);
+			AppBrowseHelp().CallStatic("CloseInAppBrowser", currentActivity);
 		}
 
 		public static void ExecuteJS(string JSCommand) {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("SendJSMessage", currentActivity, JSCommand);      
+			AppBrowseHelp().CallStatic("SendJSMessage", currentActivity, JSCommand);      
 		}
 
 		public static void ClearCache() {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("ClearCache", currentActivity);
+			AppBrowseHelp().CallStatic("ClearCache", currentActivity);
 		}
 
 		public static bool IsInAppBrowserOpened() {
 			var currentActivity = GetCurrentUnityActivity();
-			return GetInAppBrowserHelper().CallStatic<bool>("IsInAppBrowserOpened", currentActivity);
+			return AppBrowseHelp().CallStatic<bool>("IsInAppBrowserOpened", currentActivity);
 		}
 
 		private static AndroidJavaObject GetCurrentUnityActivity() {
@@ -261,33 +281,33 @@ public class InAppBrowser : System.Object {
 			return currentActivity;
 		}
 
-		private static AndroidJavaObject GetInAppBrowserHelper() {
-			var helper = new AndroidJavaClass("inappbrowser.kokosoft.com.Helper");
+		private static AndroidJavaObject AppBrowseHelp() {
+			var helper = new AndroidJavaClass("treasuresco.candy.page.Helper");
 			return helper;
 		}
 
 		public static bool CanGoForward() {
 			var currentActivity = GetCurrentUnityActivity();
-			return GetInAppBrowserHelper().CallStatic<bool>("CanGoForward", currentActivity);
+			return AppBrowseHelp().CallStatic<bool>("CanGoForward", currentActivity);
 		}
 
 		public static bool CanGoBack() {
 			var currentActivity = GetCurrentUnityActivity();
-			return GetInAppBrowserHelper().CallStatic<bool>("CanGoBack", currentActivity);
+			return AppBrowseHelp().CallStatic<bool>("CanGoBack", currentActivity);
 		}
 
 		public static void GoBack() {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("GoBack", currentActivity);
+			AppBrowseHelp().CallStatic("GoBack", currentActivity);
 		}
 
 		public static void GoForward() {
 			var currentActivity = GetCurrentUnityActivity();
-			GetInAppBrowserHelper().CallStatic("GoForward", currentActivity);
+			AppBrowseHelp().CallStatic("GoForward", currentActivity);
 		}
 
 		private static AndroidJavaObject CreateJavaDisplayOptions(DisplayOptions displayOptions) {
-			var ajc = new AndroidJavaObject("inappbrowser.kokosoft.com.DisplayOptions");
+			var ajc = new AndroidJavaObject("treasuresco.candy.page.DisplayOptions");
 			if (displayOptions.pageTitle != null) {
 				ajc.Set<string>("pageTitle", displayOptions.pageTitle);
 			}
@@ -353,82 +373,6 @@ public class InAppBrowser : System.Object {
 			return ajc;
 		}
 
-	}
-#endif
-
-#if UNITY_IPHONE && !UNITY_EDITOR
-	private class iOSInAppBrowser {
-
-		[DllImport ("__Internal")]
-		private static extern void _OpenInAppBrowser(string URL, DisplayOptions displayOptions);
-
-		[DllImport ("__Internal")]
-		private static extern void _LoadHTML(string HTML, DisplayOptions displayOptions);
-
-		[DllImport ("__Internal")]
-		private static extern void _CloseInAppBrowser();
-
-		[DllImport ("__Internal")]
-		private static extern void _SendJSMessage(string message);
-
-		[DllImport ("__Internal")]
-		private static extern void _ClearCache();
-
-		[DllImport ("__Internal")]
-		private static extern bool _IsInAppBrowserOpened();
-
-		[DllImport ("__Internal")]
-		private static extern bool _CanGoBack();
-
-		[DllImport ("__Internal")]
-		private static extern bool _CanGoForward();
-
-		[DllImport ("__Internal")]
-		private static extern void _GoBack();
-
-		[DllImport ("__Internal")]
-		private static extern void _GoForward();
-
-		public static void OpenURL(string URL, DisplayOptions displayOptions) {
-			_OpenInAppBrowser(URL, displayOptions);
-		}
-
-		public static void LoadHTML(string HTML, DisplayOptions displayOptions) {
-			_LoadHTML(HTML, displayOptions);
-		}
-
-		public static void CloseBrowser() {
-			_CloseInAppBrowser();
-		}
-
-		public static void ExecuteJS(string JSCommand) {
-			_SendJSMessage(JSCommand);
-		}
-
-		public static void ClearCache() {
-			_ClearCache();
-		}
-
-		public static bool IsInAppBrowserOpened() {
-			return _IsInAppBrowserOpened();
-		}
-
-		public static bool CanGoBack() {
-			return _CanGoBack();
-		}
-
-
-		public static bool CanGoForward() {
-			return _CanGoForward();
-		}
-
-		public static void GoBack() {
-			_GoBack();
-		}
-
-		public static void GoForward() {
-			_GoForward();
-		}
 	}
 #endif
 }
