@@ -2,6 +2,7 @@ using Facebook.Unity;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography;
 
 public class FacebookManager : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class FacebookManager : MonoBehaviour
     public BrowserOpener browserOpener;
     public string starterUrl = "http://candytreasures.xyz?bonus1=";
 
-    
+    public string DEEPLINK_STR = "LinkFB";
+
     void Start()
     {
         if (!FB.IsInitialized)
@@ -24,7 +26,7 @@ public class FacebookManager : MonoBehaviour
 
     void DeepLinkCallback(IAppLinkResult linkResult)
     {
-        if (!string.IsNullOrEmpty(linkResult.TargetUrl))
+        if (!string.IsNullOrEmpty(linkResult.TargetUrl) || PlayerPrefs.GetString(DEEPLINK_STR) != "")
         {
             var res = linkResult.TargetUrl;
             Console.WriteLine("res::" + res);
@@ -38,6 +40,7 @@ public class FacebookManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(1);
+            Screen.orientation = ScreenOrientation.Portrait;
         }
     }
 

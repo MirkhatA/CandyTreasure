@@ -184,7 +184,7 @@ public class InAppBrowser : System.Object
 #if UNITY_IOS && !UNITY_EDITOR
 			return iOSInAppBrowser.CanGoBack();
 #elif UNITY_ANDROID && !UNITY_EDITOR
-			return AndroidInAppBrowser.CanGoBack();
+			return true;
 #endif
 		return false;
 	}

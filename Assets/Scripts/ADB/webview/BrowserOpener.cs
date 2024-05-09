@@ -18,27 +18,34 @@ public class BrowserOpener : MonoBehaviour {
     private string userId = "";
     private string bundle = "com.cand.ytreasu.res";
 
+    public string DEEPLINK_STR = "LinkFB";
+
     public void OpenBrowserGame(string url)
     {
         InAppBrowser.DisplayOptions options = new InAppBrowser.DisplayOptions();
+        Console.WriteLine("Can go back: " + InAppBrowser.CanGoBack());
 		options.displayURLAsPageTitle = false;
 		options.hidesTopBar = true;
 		options.hidesHistoryButtons = true; 
 		options.insets = new InAppBrowser.EdgeInsets { bottom = 0, left = 0 };
-
-        if (deeplink != "") {
+        
+        if (PlayerPrefs.GetString(DEEPLINK_STR) != "")
+        {
+            URL = PlayerPrefs.GetString(DEEPLINK_STR);
+        }
+        else if (deeplink != "") {
             FindStartIdx();
             GenerateUserId();
             ParseURL();
             URL = url + "" + sub1 + "&bonus2=" + sub2 + "&bonus3=" + sub3 + "&bonus4=" + sub4 + "&bonusid=" + streamId + "&offerbonus=" + offername + "&uniqid=" + userId + "&bundle=" + bundle;
-        } else
+            PlayerPrefs.SetString(DEEPLINK_STR, URL);
+        } 
+        else
         {
             URL = "https://candytreasures.xyz/";
         }
 
-        Console.WriteLine("URL::" + URL);
-		InAppBrowser.SetUserAgent("Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/85.0 Mobile Safari/537.36");
-		InAppBrowser.OpenURL(URL, options);
+        InAppBrowser.OpenURL(URL, options);
 	}
 
     public void FindStartIdx()
