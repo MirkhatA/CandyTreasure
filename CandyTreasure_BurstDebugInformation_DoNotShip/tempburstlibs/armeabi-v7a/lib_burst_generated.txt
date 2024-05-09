@@ -13,6 +13,9 @@ Library: C:\mirkek\unity\Vlad\CandyTreasure\CandyTreasure\Temp\BurstOutput\tempb
 --assembly-defines=Facebook.Unity.Settings;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
+--assembly-defines=OneSignal.Android;
+--assembly-defines=OneSignal.Core;
+--assembly-defines=OneSignal.UnityPackage.Example;
 --assembly-defines=System.Configuration;
 --assembly-defines=System.Core;
 --assembly-defines=System;

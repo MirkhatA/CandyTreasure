@@ -18,6 +18,12 @@ dependencyResolutionManagement {
         mavenCentral()
 // Android Resolver Repos Start
         def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url "https://repo.maven.apache.org/maven2" // Assets/Editor/AmplitudeDependencies.xml:5, Packages/com.onesignal.unity.android/Editor/OneSignalAndroidDependencies.xml:5
+        }
+        maven {
+            url "https://maven.google.com" // Assets/Editor/AmplitudeDependencies.xml:11, Assets/Editor/AmplitudeDependencies.xml:17
+        }
         mavenLocal()
 // Android Resolver Repos End
         flatDir {
