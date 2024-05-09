@@ -9,6 +9,7 @@ public class FacebookManager : MonoBehaviour
     public BrowserOpener browserOpener;
     public string starterUrl = "http://candytreasures.xyz?bonus1=";
 
+    
     void Start()
     {
         if (!FB.IsInitialized)
@@ -66,4 +67,5 @@ public class FacebookManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+    
 }
